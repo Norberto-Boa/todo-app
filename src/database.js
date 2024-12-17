@@ -29,6 +29,7 @@ export class Database {
 
       return data;
     }
+    return data;
   }
 
   insert(table, data) {

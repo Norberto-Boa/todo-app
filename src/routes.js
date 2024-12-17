@@ -45,6 +45,11 @@ export const routes = [
     path: buildRoutePath("/todos"),
     handler: (req, res) => {
 
+      const { search } = req.query;
+
+      const tasks = database.select("tasks", search ? { title: search } : null);
+
+      return res.writeHead(200).end(JSON.stringify(tasks));
     }
   }
 ]
