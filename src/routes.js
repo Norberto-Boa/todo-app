@@ -1,6 +1,8 @@
 import { randomUUID } from "node:crypto";
-import { buildRoutePath } from "./utils/build-route-path";
+import { buildRoutePath } from "./utils/build-route-path.js";
+import { Database } from "./database.js";
 
+const database = new Database;
 
 export const routes = [
   // Controller to handle creation of todos
@@ -31,7 +33,9 @@ export const routes = [
         updatedAt: new Date().toISOString()
       }
 
+      database.insert("tasks", task);
 
+      return res.writeHead(201).end("Successfully Created!");
     }
   },
 
