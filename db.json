@@ -1,12 +1,1 @@
-{
-  "tasks": [
-    {
-      "id": "35117eec-6316-4c30-a034-7c2b50d947ea",
-      "completed": false,
-      "createdAt": "2024-12-17T21:45:40.260Z",
-      "updatedAt": "2024-12-18T21:25:55.078Z",
-      "title": "Djobar",
-      "description": "Nao dormir tipo mulher"
-    }
-  ]
-}
+{"tasks":[{"id":"35117eec-6316-4c30-a034-7c2b50d947ea","createdAt":"2024-12-17T21:45:40.260Z","updatedAt":"2024-12-18T21:39:09.092Z","title":"Djobar","description":"Nao dormir tipo mulher","completed":true}]}

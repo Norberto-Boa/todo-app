@@ -61,9 +61,21 @@ export const routes = [
       const { id } = req.params;
       const { title, description, completed } = req.body;
 
-      if (!title && !description && completed == null) {
+      if (!title) {
         return res.writeHead(400).end(JSON.stringify({
-          message: "At least one field is required!"
+          message: "Title is required!"
+        }));
+      }
+
+      if (!description) {
+        return res.writeHead(400).end(JSON.stringify({
+          message: "Description or completion status is required!"
+        }));
+      }
+
+      if (typeof completed !== "boolean") {
+        return res.writeHead(400).end(JSON.stringify({
+          message: "Completion status must be a boolean!"
         }));
       }
 
