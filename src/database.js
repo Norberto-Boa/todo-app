@@ -36,7 +36,7 @@ export class Database {
     if (Array.isArray(this.#database[table])) {
       this.#database[table].push(data);
     } else {
-      this.#database[table] = data
+      this.#database[table] = [data];
     }
 
     this.#persist();
@@ -56,8 +56,18 @@ export class Database {
   update(table, id, data) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id);
 
+
     if (rowIndex > -1) {
-      this.#database[table][rowIndex] = { id, ...data };
+      // Get the existing row
+      const existingRow = this.#database[table][rowIndex];
+
+      // Merge existing data with the new data and update `updatedAt`
+      this.#database[table][rowIndex] = {
+        ...existingRow,    // Spread the existing fields
+        ...data,           // Overwrite with new data
+        updatedAt: new Date().toISOString(), // Always update `updatedAt`
+      };
+
       this.#persist();
     }
   }

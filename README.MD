@@ -4,7 +4,7 @@ In this Project I'll be doing a simple to do API
 
 ## Functional Requirements
 - [x] Must Create a task
-- [ ] Must list all tasks
+- [x] Must list all tasks
 - [ ] Must update task by id
 - [ ] Must remove task by id
 - [ ] Must mark task as completed by id

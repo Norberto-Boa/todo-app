@@ -51,5 +51,25 @@ export const routes = [
 
       return res.writeHead(200).end(JSON.stringify(tasks));
     }
+  },
+
+  // Update task by ID
+  {
+    method: "PUT",
+    path: buildRoutePath("/todo/:id"),
+    handler: (req, res) => {
+      const { id } = req.params;
+      const { title, description, completed } = req.body;
+
+      if (!title && !description && completed == null) {
+        return res.writeHead(400).end(JSON.stringify({
+          message: "At least one field is required!"
+        }));
+      }
+
+      database.update("tasks", id, { title, description, completed });
+
+      return res.writeHead(200).end("Task updated successfully!");
+    }
   }
 ]
