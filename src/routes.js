@@ -61,6 +61,14 @@ export const routes = [
       const { id } = req.params;
       const { title, description, completed } = req.body;
 
+      const doesTaskExist = database.getById("tasks", id);
+
+      if (doesTaskExist.length === 0) {
+        return res.writeHead(404).end(JSON.stringify({
+          message: "Task not found!"
+        }));
+      }
+
       if (!title) {
         return res.writeHead(400).end(JSON.stringify({
           message: "Title is required!"
