@@ -23,7 +23,7 @@ const server = http.createServer(async (req, res) => {
     return route.handler(req, res);
   }
 
-  return res.writable(404).end();
+  return res.writeHead(404).end();
 
 })
 

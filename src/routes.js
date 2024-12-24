@@ -107,5 +107,30 @@ export const routes = [
     }
 
 
+  },
+
+  // Set task as completed
+  {
+    method: "PATCH",
+    path: buildRoutePath("/todo/:id/complete"),
+    handler: (req, res) => {
+      const { id } = req.params;
+
+      const [task] = database.select("tasks", { id });
+
+      if (!task) {
+        return res.writeHead(404).end(JSON.stringify({
+          message: "Task not found!"
+        }));
+      }
+
+      if (task.completed_at) {
+        database.update("tasks", id, { completed_at: null });
+        return res.writeHead(200).end("Task marked as null successfully!");
+      }
+
+      database.update("tasks", id, { completed_at: new Date().toISOString() });
+      return res.writeHead(200).end("Task marked as completed successfully!");
+    }
   }
 ]
