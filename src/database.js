@@ -32,16 +32,6 @@ export class Database {
     return data;
   }
 
-  getById(table, id) {
-    let data = this.#database[table] ?? [];
-
-    data = data.filter(row => {
-      console.log(row.id === id);
-      return row.id === id;
-    });
-
-    return data;
-  }
 
   insert(table, data) {
     if (Array.isArray(this.#database[table])) {
