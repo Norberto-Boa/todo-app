@@ -23,11 +23,11 @@ export class Database {
     if (search) {
       data = data.filter(row => {
         return Object.entries(search).some(([key, value]) => {
-          return row[key].toLowerCase().includes(value.toLowerCase());
+          if (!value) return true;
+
+          return row[key].includes(value);
         })
       })
-
-      return data;
     }
     return data;
   }
@@ -72,12 +72,11 @@ export class Database {
       // Get the existing row
       const existingRow = this.#database[table][rowIndex];
 
-      // Merge existing data with the new data and update `updatedAt`
-      this.#database[table][rowIndex] = {
-        ...existingRow,    // Spread the existing fields
-        ...data,           // Overwrite with new data
-        updatedAt: new Date().toISOString(), // Always update `updatedAt`
-      };
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          existingRow[key] = data[key];
+        }
+      }
 
       this.#persist();
     }

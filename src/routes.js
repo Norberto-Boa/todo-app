@@ -28,7 +28,7 @@ export const routes = [
         id: randomUUID(),
         title,
         description,
-        completed: false,
+        completed_at: null,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }
@@ -61,33 +61,25 @@ export const routes = [
       const { id } = req.params;
       const { title, description, completed } = req.body;
 
-      const doesTaskExist = database.getById("tasks", id);
+      if (!title && !description) {
+        return res.writeHead(400).end(
+          JSON.stringify({ message: 'title or description are required' })
+        )
+      }
 
-      if (doesTaskExist.length === 0) {
+      const [task] = database.select("tasks", { id });
+
+      if (!task) {
         return res.writeHead(404).end(JSON.stringify({
           message: "Task not found!"
         }));
       }
 
-      if (!title) {
-        return res.writeHead(400).end(JSON.stringify({
-          message: "Title is required!"
-        }));
-      }
 
-      if (!description) {
-        return res.writeHead(400).end(JSON.stringify({
-          message: "Description or completion status is required!"
-        }));
-      }
-
-      if (typeof completed !== "boolean") {
-        return res.writeHead(400).end(JSON.stringify({
-          message: "Completion status must be a boolean!"
-        }));
-      }
-
-      database.update("tasks", id, { title, description, completed });
+      database.update("tasks", id, {
+        title: title ?? task.title,
+        description: description ?? task.description
+      });
 
       return res.writeHead(200).end("Task updated successfully!");
     }
